@@ -1,0 +1,123 @@
+<launch>
+  <node name="master_sync" pkg="master_sync_fkie" type="master_sync">
+    <!-- Performs resync after the host was offline: unregister and register again to avoid connection losses to python topic. These does not suppot reconnection! -->
+    <param name="resync_on_reconnect" value="True" />
+    <!-- A configurable period that controls how long the offline-online period [sec] is before the resync kicks in.
+     (Since version 0.5.9)-->
+    <param name="resync_on_reconnect_timeout" value="0" />
+    <!-- Since version 0.7.4:
+      For all sync_* and ignore_* parameter you can use follow structure to define filter for specific hosts:
+      <rosparam param="sync_topics">
+          - hostname:
+            - filter
+      </rosparam>
+    -->
+    <!-- A filter list with patterns. If this pattern merges to a node, topic or service it will not be synchronized.
+     (Since version 0.5.4)-->
+    <rosparam param="do_not_sync">[]</rosparam>
+
+    <!-- This list with names of ROS master to ignore -->
+    <rosparam param="ignore_hosts">[]</rosparam>
+
+    <!-- This list with names of ROS master to synchronize. Only this ROS master in this list will be synchronized. The ~ignore_hosts list is processed first. -->
+    <rosparam param="sync_hosts">[]</rosparam>
+
+    <!-- The list of nodes, which are to be ignored while a synchroniation. All their topics and services are ignored!
+    These are defaults and cannot be removed: [/rosout, "/*master_sync* node", "remote /*master_discovery* node", "/*node_manager", /*zeroconf] -->
+    <rosparam param="ignore_nodes">[
+'/gazebo_gui',
+'/tf',
+'/tf_static',
+'/uav1/mavros',
+'/uav3/mavros',
+'/uav4/mavros',
+'/SimpleRunner1',
+'/SimpleRunner3',
+'/SimpleRunner4'
+    ]</rosparam>
+
+    <!-- The list of nodes to synchronize. Only topics of this nodes are synchronized. The ~ignore_nodes, ~ignore_topics and ~ignore_services lists are processed first. -->
+    <rosparam param="sync_nodes">[]</rosparam>
+
+    <!-- The list of topics, which are to be ignored while a synchroniation. The ~ignore_nodes list is processed first.
+    These are defaults and cannot be removed: ['/rosout', '/rosout_agg'] -->
+    <rosparam param="ignore_topics">[]</rosparam>
+    <rosparam param="ignore_publishers">[]</rosparam>
+    <rosparam param="ignore_subscribers">[]</rosparam>
+
+    <!-- The list of topics to synchronize. The ~ignore_nodes and ~ignore_topics lists are processed first. -->
+    <rosparam param="sync_topics">['/uav2/mavros/setpoint_position/local',
+
+                                    '/uav2/mavros/state',
+
+                                    '/uav2/mavros/global_position/local',
+'/gazebo/link_states',
+'/gazebo/model_states',
+'/gazebo/parameter_descriptions',
+'/gazebo/parameter_updates',
+'/gazebo/set_link_state',
+'/gazebo/set_model_state',
+'/gazebo_gui/parameter_descriptions',
+'/gazebo_gui/parameter_updates',
+'/groundStation',
+'/runnerState'
+
+                                    ]</rosparam>
+
+    <!-- The list of services, which are to be ignored while a synchroniation. The ~ignore_nodes list is processed first.
+    These are defaults and cannot be removed: ['/*get_loggers', '/*set_logger_level'] -->
+    <rosparam param="ignore_services">[]</rosparam>
+
+    <!-- The list of services to synchronize. The ~ignore_nodes and ~ignore_services lists are processed first. -->
+    <rosparam param="sync_services">[
+        '/uav2/mavros/cmd/arming',
+        '/uav2/mavros/set_mode',
+'/gazebo/apply_body_wrench',
+'/gazebo/apply_joint_effort',
+'/gazebo/clear_body_wrenches',
+'/gazebo/clear_joint_forces',
+'/gazebo/delete_light',
+'/gazebo/delete_model',
+'/gazebo/get_joint_properties',
+'/gazebo/get_light_properties',
+'/gazebo/get_link_properties',
+'/gazebo/get_link_state',
+'/gazebo/get_loggers',
+'/gazebo/get_model_properties',
+'/gazebo/get_model_state',
+'/gazebo/get_physics_properties',
+'/gazebo/get_world_properties',
+'/gazebo/pause_physics',
+'/gazebo/reset_simulation',
+'/gazebo/reset_world',
+'/gazebo/set_joint_properties',
+'/gazebo/set_light_properties',
+'/gazebo/set_link_properties',
+'/gazebo/set_link_state',
+'/gazebo/set_logger_level',
+'/gazebo/set_model_configuration',
+'/gazebo/set_model_state',
+'/gazebo/set_parameters',
+'/gazebo/set_physics_properties',
+'/gazebo/spawn_sdf_model',
+'/gazebo/spawn_urdf_model',
+'/gazebo/unpause_physics',
+'/gazebo_gui/get_loggers',
+'/gazebo_gui/set_logger_level',
+'/gazebo_gui/set_parameters'
+]</rosparam>
+
+    <!-- This parameter is only regarded, if sync_nodes or sync_topics are set. In this case the subscribed and published topics are synchronized even if they are not in the sync_* list -->
+    <param name="sync_topics_on_demand" value="False" />
+
+    <!-- The list of types to ignore.
+    These are defaults and cannot be removed: ['bond/Status'] -->
+    <rosparam param="ignore_type">[]</rosparam>
+
+    <!-- The nodes which are running not at the same host as the ROS master are not synchronized by default. Use sync_remote_nodes to sync these nodes also. -->
+    <param name="sync_remote_nodes" value="False" />
+
+
+
+  </node>
+</launch>
