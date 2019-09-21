@@ -1,0 +1,8 @@
+<launch>
+	<node 
+		name="GroundRunner"
+		pkg="high_level_control"
+		type="ground_station" 
+		output="screen"
+	/>
+</launch>

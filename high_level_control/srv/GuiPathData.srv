@@ -1,0 +1,7 @@
+int16 index
+string name
+std_msgs/ColorRGBA color
+geometry_msgs/Pose2D[] wps
+---
+bool success
+string message

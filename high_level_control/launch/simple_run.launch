@@ -1,0 +1,8 @@
+<launch>
+
+	<arg name="hostname" default="uav1" />
+	<arg name="id" default="1" />
+
+	<node name="SimpleRunner$(arg id)" pkg="high_level_control" type="high_level_controller" args="$(arg hostname) $(arg id)" output="screen" />
+
+</launch>
